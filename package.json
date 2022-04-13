@@ -1,6 +1,6 @@
 {
-  "name": "qr-code-styling",
-  "version": "1.5.0",
+  "name": "@ecom/qr-code-styling",
+  "version": "1.5.3",
   "description": "Add a style and an image to your QR code",
   "main": "lib/qr-code-styling.js",
   "types": "lib/index.d.ts",
@@ -8,7 +8,7 @@
     "lib"
   ],
   "dependencies": {
-    "qrcode-generator": "^1.4.3"
+    "qrcode-generator": "^1.4.4"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.13.0",
