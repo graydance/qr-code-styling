@@ -57,7 +57,11 @@ module.exports = [{
     path: tmpPath,
     filename: "qr-code-styling.common.js",
     library: "QRCodeStyling",
-    libraryTarget: "commonjs",
-    libraryExport: "default"
+    libraryTarget: "this",
+    libraryExport: "default",
+    // globalObject: 'this',
   },
+  optimization: {
+    minimize: false,
+  }
 }];
