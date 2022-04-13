@@ -39,7 +39,8 @@
     "build:dev": "webpack --mode=development --config webpack.config.build.js",
     "prepare": "npm run build",
     "test": "jest",
-    "start": "webpack serve --open --config webpack.config.dev-server.js"
+    "start": "webpack serve --open --config webpack.config.dev-server.js",
+    "artifactregistry-login": "npx google-artifactregistry-auth"
   },
   "repository": {
     "type": "git",
