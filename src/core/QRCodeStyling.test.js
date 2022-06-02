@@ -11,7 +11,7 @@ describe("Test QRCodeStyling class", () => {
 
   it("The README example should work correctly", (done) => {
     const expectedQRCodeFile = fs.readFileSync(
-      path.resolve(__dirname, "../assets/test/image_from_readme.png"),
+      path.resolve(__dirname, "../assets/test/image_from_readme2.png"),
       "base64"
     );
     const qrCode = new QRCodeStyling({
@@ -42,7 +42,7 @@ describe("Test QRCodeStyling class", () => {
 
   it("Compatible with node-canvas", (done) => {
     const expectedQRCodeFile = fs.readFileSync(
-      path.resolve(__dirname, "../assets/test/image_from_readme.png"),
+      path.resolve(__dirname, "../assets/test/image_from_readme2.png"),
       "base64"
     );
     const qrCode = new QRCodeStyling({

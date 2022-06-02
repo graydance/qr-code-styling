@@ -415,7 +415,7 @@ export default class QRCanvas {
     if (!this._image) {
       throw "image is not defined";
     }
-
+    const dr = 32;
     const options = this._options;
     const xBeginning = Math.floor((options.width - count * dotSize) / 2);
     const yBeginning = Math.floor((options.height - count * dotSize) / 2);
@@ -423,8 +423,15 @@ export default class QRCanvas {
     const dy = yBeginning + options.imageOptions.margin + (count * dotSize - height) / 2;
     const dw = width - options.imageOptions.margin * 2;
     const dh = height - options.imageOptions.margin * 2;
-
+    canvasContext.save();
+    canvasContext.beginPath();
+    canvasContext.arc(dx + dr, dy + dr, dr, Math.PI, Math.PI * 1.5);
+    canvasContext.arc(dx + dw - dr, dy + dr, dr, Math.PI * 1.5, Math.PI * 2);
+    canvasContext.arc(dx + dw - dr, dy + dh - dr, dr, 0, Math.PI * 0.5);
+    canvasContext.arc(dx + dr, dy + dh - dr, dr, Math.PI * 0.5, Math.PI);
+    canvasContext.clip();
     canvasContext.drawImage(this._image, dx, dy, dw < 0 ? 0 : dw, dh < 0 ? 0 : dh);
+    canvasContext.restore();
   }
 
   _createGradient({
