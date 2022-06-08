@@ -57,6 +57,11 @@ export default class QRCanvas {
     return this._canvas.height;
   }
 
+  resetCanvas(): void {
+    this._canvas.width = this._options.width;
+    this._canvas.height = this._options.height;
+  }
+
   getCanvas(): Canvas {
     return this._canvas;
   }
@@ -374,6 +379,23 @@ export default class QRCanvas {
             if (/(\.svg$)|(^data:image\/svg)/.test(options.image ?? "")) {
               image.width = this._options.width;
               image.height = this._options.height;
+            }
+            // 剪切正方形头像
+            if (image.width != image.height) {
+              const minSize = Math.min(image.width, image.height);
+              const canvas = this.getCanvas();
+              canvas.width = minSize;
+              canvas.height = minSize;
+              const canvasContext = this.context;
+              if (canvasContext) {
+                if (image.width > minSize || image.height > minSize) {
+                  const xBegin = (image.width - minSize) / 2;
+                  const yBegin = (image.height - minSize) / 2;
+                  canvasContext.drawImage(image, xBegin, yBegin, minSize, minSize, 0, 0, minSize, minSize);
+                }
+                image.src = this.getCanvas().toDataURL("image/png");
+                this.resetCanvas();
+              }
             }
             this._image = image;
             resolve();
