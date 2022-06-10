@@ -9,6 +9,22 @@ export type CornerSquareType = "dot" | "square" | "extra-rounded";
 export type Extension = "svg" | "png" | "jpeg" | "webp";
 export type GradientType = "radial" | "linear";
 export type DrawType = "canvas" | "svg";
+export type FrameType =
+  | "default"
+  | "scan"
+  | "purpleFlower"
+  | "purplePerson"
+  | "freshSummer"
+  | "passionate"
+  | "tetris"
+  | "redFlame"
+  | "2DWorld"
+  | "wizardOfOz"
+  | "sawtooth"
+  | "pureLight"
+  | "pureDark"
+  | "point"
+  | "colorful";
 
 export interface Canvas extends HTMLCanvasElement {
   toBuffer?: (type: string) => Buffer;
@@ -49,6 +65,10 @@ export type Gradient = {
 
 export interface DotTypes {
   [key: string]: DotType;
+}
+
+export interface FrameTypes {
+  [key: string]: FrameType;
 }
 
 export interface GradientTypes {
@@ -166,6 +186,15 @@ export type Options = {
     color?: string;
     gradient?: Gradient;
   };
+  frame?: {
+    type?: FrameType;
+    gradient?: Gradient;
+    text?: string;
+    textSize?: number;
+    textType?: boolean;
+    textColor?: string;
+    textFont?: string;
+  };
 };
 
 export type FilterFunction = (i: number, j: number) => boolean;
@@ -181,6 +210,17 @@ export type DrawArgs = {
   size: number;
   rotation?: number;
   getNeighbor?: GetNeighbor;
+};
+
+export type FrameArgs = {
+  hasText: boolean; // 是否需要字体
+  sWidth: number; // 二维码 宽
+  sHeight: number; // 二维码 高
+  x: number; // 插入二维码 x 坐标
+  y: number; // 插入二维码 y 坐标
+  textSize?: number; // 文字大小
+  textType?: string; // 文字类型
+  textColor?: string; // 文字颜色
 };
 
 export type BasicFigureDrawArgs = {
