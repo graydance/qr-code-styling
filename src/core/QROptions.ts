@@ -1,7 +1,7 @@
 import qrTypes from "../constants/qrTypes";
 import drawTypes from "../constants/drawTypes";
 import errorCorrectionLevels from "../constants/errorCorrectionLevels";
-import { DotType, Options, TypeNumber, ErrorCorrectionLevel, Mode, DrawType, Gradient } from "../types";
+import { DotType, Options, TypeNumber, ErrorCorrectionLevel, Mode, DrawType, Gradient, FrameType } from "../types";
 
 export interface RequiredOptions extends Options {
   type: DrawType;
@@ -29,6 +29,15 @@ export interface RequiredOptions extends Options {
   backgroundOptions: {
     color: string;
     gradient?: Gradient;
+  };
+  frame?: {
+    type: FrameType;
+    gradient?: Gradient;
+    textSize?: number;
+    textType?: boolean;
+    textColor?: string;
+    textFont?: string;
+    text?: string;
   };
 }
 

@@ -1,6 +1,7 @@
 import calculateImageSize from "../tools/calculateImageSize";
 import errorCorrectionPercents from "../constants/errorCorrectionPercents";
 import QRDot from "../figures/dot/canvas/QRDot";
+import QRFrame from "../figures/frame/canvas/QRFrame";
 import QRCornerSquare from "../figures/cornerSquare/canvas/QRCornerSquare";
 import QRCornerDot from "../figures/cornerDot/canvas/QRCornerDot";
 import { RequiredOptions } from "./QROptions";
@@ -131,6 +132,15 @@ export default class QRCanvas {
 
     if (this._options.image) {
       this.drawImage({ width: drawImageSize.width, height: drawImageSize.height, count, dotSize });
+    }
+    // 画外边框
+    await this.drawFrame();
+  }
+
+  async drawFrame(): Promise<void> {
+    if (this._options.frame) {
+      const frame = new QRFrame({ nodeCanvas: this, type: this._options.frame?.type });
+      await frame.draw();
     }
   }
 
@@ -395,6 +405,7 @@ export default class QRCanvas {
                 }
                 image.src = this.getCanvas().toDataURL("image/png");
                 this.resetCanvas();
+                this.clear();
               }
             }
             this._image = image;
@@ -437,6 +448,7 @@ export default class QRCanvas {
     if (!this._image) {
       throw "image is not defined";
     }
+    // 画logo倒角
     const dr = 32;
     const options = this._options;
     const xBeginning = Math.floor((options.width - count * dotSize) / 2);
