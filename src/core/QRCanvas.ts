@@ -138,7 +138,7 @@ export default class QRCanvas {
   }
 
   async drawFrame(): Promise<void> {
-    if (this._options.frame) {
+    if (this._options.frameOptions) {
       const frame = new QRFrame({ nodeCanvas: this });
       await frame.draw();
     }

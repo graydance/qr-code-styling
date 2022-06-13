@@ -166,7 +166,7 @@ export type Options = {
     color?: string;
     gradient?: Gradient;
   };
-  frame?: {
+  frameOptions?: {
     hasText: boolean;
     sWidth: number;
     sHeight: number;

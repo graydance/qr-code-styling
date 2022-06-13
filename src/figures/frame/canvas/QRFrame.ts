@@ -3,7 +3,6 @@ import { Gradient } from "../../../types";
 
 import Frame from "../style/frame";
 import gradientTypes from "../../../constants/gradientTypes";
-import path from "path";
 export default class QRFrame {
   _nodeCanvas: QRCanvas;
   // 构造方法，需要 canvas 的 ctx 和 frame 类型
@@ -48,7 +47,7 @@ export default class QRFrame {
         // 获取 二维码缩小后 imageData
         const qrCodeImageData = qrcodeImageCtx.getImageData(0, 0, qrcodeCanvas.width, qrcodeCanvas.height);
         nodeCanvas.clear();
-        await this._loadFrame(path.resolve(__dirname, `../style/img/${frame.frame}`));
+        await this._loadFrame(frame.frame);
         canvasContext.putImageData(qrCodeImageData, frame.x, frame.y);
         // 判断是否需要写字
         this.drawText(frame);

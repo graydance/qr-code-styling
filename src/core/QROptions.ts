@@ -30,7 +30,7 @@ export interface RequiredOptions extends Options {
     color: string;
     gradient?: Gradient;
   };
-  frame?: {
+  frameOptions?: {
     hasText: boolean; // 是否需要字体
     sWidth: number; // 二维码 宽
     sHeight: number; // 二维码 高
