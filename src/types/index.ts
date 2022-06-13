@@ -9,22 +9,6 @@ export type CornerSquareType = "dot" | "square" | "extra-rounded";
 export type Extension = "svg" | "png" | "jpeg" | "webp";
 export type GradientType = "radial" | "linear";
 export type DrawType = "canvas" | "svg";
-export type FrameType =
-  | "default"
-  | "scan"
-  | "purpleFlower"
-  | "purplePerson"
-  | "freshSummer"
-  | "passionate"
-  | "tetris"
-  | "redFlame"
-  | "2DWorld"
-  | "wizardOfOz"
-  | "sawtooth"
-  | "pureLight"
-  | "pureDark"
-  | "point"
-  | "colorful";
 
 export interface Canvas extends HTMLCanvasElement {
   toBuffer?: (type: string) => Buffer;
@@ -65,10 +49,6 @@ export type Gradient = {
 
 export interface DotTypes {
   [key: string]: DotType;
-}
-
-export interface FrameTypes {
-  [key: string]: FrameType;
 }
 
 export interface GradientTypes {
@@ -187,13 +167,21 @@ export type Options = {
     gradient?: Gradient;
   };
   frame?: {
-    type?: FrameType;
-    gradient?: Gradient;
+    hasText: boolean;
+    sWidth: number;
+    sHeight: number;
+    x: number;
+    y: number;
+    frame: string;
     text?: string;
+    textXBegin?: number;
+    textYBegin?: number;
     textSize?: number;
     textType?: boolean;
     textColor?: string;
     textFont?: string;
+    gradientOptions?: Gradient;
+    isRemoveMargin?: boolean;
   };
 };
 
