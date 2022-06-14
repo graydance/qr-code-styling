@@ -42,12 +42,16 @@ export default class QRFrame {
             nodeCanvas.height
           );
         }
+
         qrcodeImageCtx?.drawImage(nodeCanvas._canvas, 0, 0, frame.sWidth, frame.sHeight);
 
         // 获取 二维码缩小后 imageData
         const qrCodeImageData = qrcodeImageCtx.getImageData(0, 0, qrcodeCanvas.width, qrcodeCanvas.height);
         nodeCanvas.clear();
-        await this._loadFrame(frame.frame);
+        // await this._loadFrame(frame.frame);
+        if (nodeCanvas._frameImage) {
+          canvasContext.drawImage(nodeCanvas._frameImage, 0, 0, this._nodeCanvas.width, this._nodeCanvas.height);
+        }
         canvasContext.putImageData(qrCodeImageData, frame.x, frame.y);
         // 判断是否需要写字
         this.drawText(frame);

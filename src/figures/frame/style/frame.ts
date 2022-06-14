@@ -33,9 +33,6 @@ export default class Base {
     this.textXBegin = frameOptions?.textXBegin ? frameOptions?.textXBegin : 0;
     this.textYBegin = frameOptions?.textYBegin ? frameOptions?.textYBegin : 0;
     this.frame = frameOptions?.frame ? frameOptions?.frame : "color.png";
-    const res = frameOptions?.isRemoveMargin;
-    console.log(res);
-
     this.isRemoveMargin = frameOptions?.isRemoveMargin != undefined ? frameOptions?.isRemoveMargin : true; // 是否去除二维码 的 白边
   }
 }

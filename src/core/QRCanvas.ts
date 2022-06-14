@@ -33,6 +33,7 @@ export default class QRCanvas {
   _options: RequiredOptions;
   _qr?: QRCode;
   _image?: HTMLImageElement;
+  _frameImage?: HTMLImageElement;
 
   //TODO don't pass all options to this class
   constructor(options: RequiredOptions) {
@@ -89,7 +90,7 @@ export default class QRCanvas {
     this._qr = qr;
 
     if (this._options.image) {
-      await this.loadImage();
+      await this.loadImage(1, this._options.image);
       if (!this._image) return;
       const { imageOptions, qrOptions } = this._options;
       const coverLevel = imageOptions.imageSize * errorCorrectionPercents[qrOptions.errorCorrectionLevel];
@@ -102,6 +103,10 @@ export default class QRCanvas {
         maxHiddenAxisDots: count - 14,
         dotSize
       });
+    }
+
+    if (this._options.frameOptions && this._options.frameOptions.frame) {
+      await this.loadImage(2, this._options.frameOptions.frame);
     }
 
     this.clear();
@@ -373,57 +378,62 @@ export default class QRCanvas {
     });
   }
 
-  loadImage(): Promise<void> {
+  loadImage(type: number, image: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const options = this._options;
 
-      if (!options.image) {
+      if (!image) {
         return reject("Image is not defined");
       }
 
       if (options.nodeCanvas?.loadImage) {
         options.nodeCanvas
-          .loadImage(options.image)
+          .loadImage(image)
           .then((image: HTMLImageElement) => {
-            // fix blurry svg
-            if (/(\.svg$)|(^data:image\/svg)/.test(options.image ?? "")) {
-              image.width = this._options.width;
-              image.height = this._options.height;
-            }
-            // 剪切正方形头像
-            if (image.width != image.height) {
-              const minSize = Math.min(image.width, image.height);
-              const canvas = this.getCanvas();
-              canvas.width = minSize;
-              canvas.height = minSize;
-              const canvasContext = this.context;
-              if (canvasContext) {
-                if (image.width > minSize || image.height > minSize) {
-                  const xBegin = (image.width - minSize) / 2;
-                  const yBegin = (image.height - minSize) / 2;
-                  canvasContext.drawImage(image, xBegin, yBegin, minSize, minSize, 0, 0, minSize, minSize);
-                }
-                image.src = this.getCanvas().toDataURL("image/png");
-                this.resetCanvas();
-                this.clear();
+            if (type == 1) {
+              // fix blurry svg
+              if (/(\.svg$)|(^data:image\/svg)/.test(options.image ?? "")) {
+                image.width = this._options.width;
+                image.height = this._options.height;
               }
+              // 剪切正方形头像
+              if (image.width != image.height) {
+                const minSize = Math.min(image.width, image.height);
+                const canvas = this.getCanvas();
+                canvas.width = minSize;
+                canvas.height = minSize;
+                const canvasContext = this.context;
+                if (canvasContext) {
+                  if (image.width > minSize || image.height > minSize) {
+                    const xBegin = (image.width - minSize) / 2;
+                    const yBegin = (image.height - minSize) / 2;
+                    canvasContext.drawImage(image, xBegin, yBegin, minSize, minSize, 0, 0, minSize, minSize);
+                  }
+                  image.src = this.getCanvas().toDataURL("image/png");
+                  this.resetCanvas();
+                  this.clear();
+                }
+              }
+              this._image = image;
+            } else {
+              this._frameImage = image;
             }
-            this._image = image;
+
             resolve();
           })
           .catch(reject);
       } else {
-        const image = new Image();
+        const newImage = new Image();
 
         if (typeof options.imageOptions.crossOrigin === "string") {
-          image.crossOrigin = options.imageOptions.crossOrigin;
+          newImage.crossOrigin = options.imageOptions.crossOrigin;
         }
 
-        this._image = image;
-        image.onload = (): void => {
+        this._image = newImage;
+        newImage.onload = (): void => {
           resolve();
         };
-        image.src = options.image;
+        newImage.src = image;
       }
     });
   }
