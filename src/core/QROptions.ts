@@ -1,7 +1,7 @@
 import qrTypes from "../constants/qrTypes";
 import drawTypes from "../constants/drawTypes";
 import errorCorrectionLevels from "../constants/errorCorrectionLevels";
-import { DotType, Options, TypeNumber, ErrorCorrectionLevel, Mode, DrawType, Gradient } from "../types";
+import { DotType, Options, TypeNumber, ErrorCorrectionLevel, Mode, DrawType, Gradient, DrawFrameType } from "../types";
 
 export interface RequiredOptions extends Options {
   type: DrawType;
@@ -46,6 +46,9 @@ export interface RequiredOptions extends Options {
     textFont?: string; // 文字样式
     gradientOptions?: Gradient;
     isRemoveMargin?: boolean; // 是否出去 二维码的 margin
+    isDraw?: boolean; // 是否需要自己 用canvas 画 边框 默认是 false
+    drawFrameType?: DrawFrameType; // 自画frame 类型
+    frameColor?: string;
   };
 }
 

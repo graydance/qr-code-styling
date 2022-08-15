@@ -328,7 +328,10 @@ export default class QRCanvas {
 
       canvasContext.fill("evenodd");
 
-      if (options.cornersDotOptions?.type) {
+      if (
+        options.cornersDotOptions?.type &&
+        (options.cornersDotOptions.type === "dot" || options.cornersDotOptions.type === "square")
+      ) {
         const cornersDot = new QRCornerDot({ context: canvasContext, type: options.cornersDotOptions?.type });
 
         canvasContext.beginPath();

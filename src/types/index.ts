@@ -9,6 +9,7 @@ export type CornerSquareType = "dot" | "square" | "extra-rounded";
 export type Extension = "svg" | "png" | "jpeg" | "webp";
 export type GradientType = "radial" | "linear";
 export type DrawType = "canvas" | "svg";
+export type DrawFrameType = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
 
 export interface Canvas extends HTMLCanvasElement {
   toBuffer?: (type: string) => Buffer;
@@ -46,6 +47,10 @@ export type Gradient = {
     color: string;
   }[];
 };
+
+export interface DrawFrameTypes {
+  [key: string]: DrawFrameType;
+}
 
 export interface DotTypes {
   [key: string]: DotType;
@@ -182,6 +187,9 @@ export type Options = {
     textFont?: string;
     gradientOptions?: Gradient;
     isRemoveMargin?: boolean;
+    isDraw?: boolean; // 是否需要自己 用canvas 画 边框 默认是 false
+    drawFrameType?: DrawFrameType; // 自画frame 类型
+    frameColor?: string;
   };
 };
 
