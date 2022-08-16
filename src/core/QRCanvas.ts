@@ -280,13 +280,23 @@ export default class QRCanvas {
       const x = xBeginning + column * dotSize * (count - 7);
       const y = yBeginning + row * dotSize * (count - 7);
 
-      if (options.cornersSquareOptions?.type) {
+      if (
+        options.cornersSquareOptions?.type &&
+        (options.cornersSquareOptions.type === "dot" ||
+          options.cornersSquareOptions.type === "square" ||
+          options.cornersSquareOptions.type === "extra-rounded")
+      ) {
         const cornersSquare = new QRCornerSquare({ context: canvasContext, type: options.cornersSquareOptions?.type });
 
         canvasContext.beginPath();
         cornersSquare.draw(x, y, cornersSquareSize, rotation);
       } else {
-        const dot = new QRDot({ context: canvasContext, type: options.dotsOptions.type });
+        let dot;
+        if (options.cornersSquareOptions?.type) {
+          dot = new QRDot({ context: canvasContext, type: options.cornersSquareOptions.type });
+        } else {
+          dot = new QRDot({ context: canvasContext, type: options.dotsOptions.type });
+        }
 
         canvasContext.beginPath();
 
@@ -337,7 +347,12 @@ export default class QRCanvas {
         canvasContext.beginPath();
         cornersDot.draw(x + dotSize * 2, y + dotSize * 2, cornersDotSize, rotation);
       } else {
-        const dot = new QRDot({ context: canvasContext, type: options.dotsOptions.type });
+        let dot;
+        if (options.cornersDotOptions?.type) {
+          dot = new QRDot({ context: canvasContext, type: options.cornersDotOptions.type });
+        } else {
+          dot = new QRDot({ context: canvasContext, type: options.dotsOptions.type });
+        }
 
         canvasContext.beginPath();
 

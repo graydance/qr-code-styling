@@ -1,6 +1,9 @@
 import dotTypes from "../../../constants/dotTypes";
+
 import {
   DotType,
+  CornerDotType,
+  CornerSquareType,
   GetNeighbor,
   RotateFigureArgsCanvas,
   BasicFigureDrawArgsCanvas,
@@ -9,9 +12,15 @@ import {
 
 export default class QRDot {
   _context: CanvasRenderingContext2D;
-  _type: DotType;
+  _type: DotType | CornerDotType | CornerSquareType;
 
-  constructor({ context, type }: { context: CanvasRenderingContext2D; type: DotType }) {
+  constructor({
+    context,
+    type
+  }: {
+    context: CanvasRenderingContext2D;
+    type: DotType | CornerDotType | CornerSquareType;
+  }) {
     this._context = context;
     this._type = type;
   }
